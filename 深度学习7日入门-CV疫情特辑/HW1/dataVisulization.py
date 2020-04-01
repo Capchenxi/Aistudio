@@ -1,77 +1,19 @@
 #!/usr/bin/env python
 # coding: utf-8
-
-# # 作业说明：
-# 
-# **作业1:飞桨本地安装**
-# 
-# **提交飞桨本地安装成功的截图**，如下图所示，有安装问题可以随时在群里提问，可参考飞桨官网：https://www.paddlepaddle.org.cn/documentation/docs/zh/install/index_cn.html
-# 
-# <img src="https://ai-studio-static-online.cdn.bcebos.com/c93925b52b2f4f9dbeb62569122924f9ee3b6c69c3b14219a74425d8360d6639" height="200" width="400" />
-# 
-# 
-# <br/>
-# <br/>
-# 
-# **作业2：新冠疫情可视化**
-# 
-# 请根据课上所学内容，爬取3月31日当天丁香园公开的统计数据，根据累计确诊数，使用pyecharts绘制疫情分布图，如下图所示，**提交截图。**
-# 
-# Pycharts api可参考：https://pyecharts.org/#/zh-cn/
-# 
-# 
-# 
-# <img src="https://ai-studio-static-online.cdn.bcebos.com/24a15aae792b49ecb4b11aa30530e97691a092ef2af94f9f97751826096b4cc8" height="200" width="400" />
-# 
-# 
-# **重要：**
-# 
-# **一定要用正确的姿势在Notebook上传图片+生成版本作业提交示例：** https://aistudio.baidu.com/aistudio/projectDetail/296022
-# 
-# 
-# 
-# 
-# 
-# 
-
-# 可视化，是一种利用计算机图形学和图像处理技术，将数据转换成图像在屏幕上显示出来，再进行交互处理的理论、方法和技术。
-# 
-# **本次实践基于丁香园公开的统计数据，实现新冠疫情可视化，包括疫情地图、疫情增长趋势图、疫情分布图等。**
-# <br />
-# <br />
-# 
-# **全国疫情地图如下：**
-# 
-# <img src="https://ai-studio-static-online.cdn.bcebos.com/3ca5fa8e7019498ab7217aea7a552f0394ff092045174b9284920dbee57b0c1a" height="500" width="500" />
-# 
-# <br />
-# <br />
-# <br />
-# <br />
-# 
-# **疫情增长趋势图如下：**
-# 
-# <img src="https://ai-studio-static-online.cdn.bcebos.com/28000edb58d34e2e991b6dc2739007ae837b9b031d8842528c9d9506941fbd17" height="500" width="600" />
-# 
-# 
-# 
-# 
-# 
-# 
+'''
+本文件基于百度Aistudio-深度学习7日入门-CV疫情特辑-作业1
+ 1. 侵删
+ 2. 已删除一些不必要的说明部分
+ 3. 添加了一些自己玩儿的部分
+ @chenxi
+ 2020/03/31
+'''
 
 # # 一、数据准备
-# 
-# 上网的全过程:
-# 
-# - 普通用户
-# 
-#  打开浏览器 --> 往目标站点发送请求 --> 接收响应数据 --> 渲染到页面上。
-#                  
+#
 # - 爬虫程序
 # 
 # 模拟浏览器 --> 往目标站点发送请求 --> 接收响应数据 --> 提取有用的数据 --> 保存到本地/数据库。
-# 
-# <br />
 # 
 # 爬虫的过程：
 # 
@@ -91,9 +33,6 @@
 # **re模块：**
 # 
 # re模块是python用于匹配字符串的模块，该模块中提供的很多功能是基于正则表达式实现的，
-
-# In[1]:
-
 
 import json
 import re
@@ -143,28 +82,19 @@ def crawl_statistics_data():
     with open("data/statistics_data.json", "w", encoding='UTF-8') as f:
         json.dump(statistics_data, f, ensure_ascii=False)
 
-
-if __name__ == '__main__':
-    crawl_dxy_data()
-    crawl_statistics_data()
-
-
-# In[2]:
+crawl_dxy_data()
+crawl_statistics_data()
 
 
 '''
 安装第三方库pyecharts ，如果下载时出现断线和速度过慢的问题导致下载失败，可以尝试使用清华镜像
+直接在终端用 pip install pyecharts
 '''
-#!pip install pyecharts
-get_ipython().system('pip install -i https://pypi.tuna.tsinghua.edu.cn/simple pyecharts')
 
 
 # # 二、疫情地图
 # 
 # Echarts 是一个由百度开源的数据可视化工具，凭借着良好的交互性，精巧的图表设计，得到了众多开发者的认可。而 Python 是一门富有表达力的语言，很适合用于数据处理。当数据分析遇上数据可视化时，**pyecharts** 诞生了。pyecharts api可以参考：https://pyecharts.org/#/zh-cn/chart_api
-# 
-# <br />
-# <br/>
 # 
 # **使用 options 配置项，在 pyecharts 中，一切皆 Options。**
 # 
@@ -173,20 +103,10 @@ get_ipython().system('pip install -i https://pypi.tuna.tsinghua.edu.cn/simple py
 # （1）系列配置项 set_series_opts(),可配置图元样式、文字样式、标签样式、点线样式等；   
 # 
 # （2）全局配置项 set_global_opts()，可配置标题、动画、坐标轴、图例等;                       
-# 
-# 先来认识下全局配置组件吧
-# 
-# <img src="https://ai-studio-static-online.cdn.bcebos.com/dc6f8d74e83a49ccb2ce5d0c2d8518fc7e731d1d203a4ec4ace84d6aacf73910" height="600" width="700" />
-# 
-# 
-# 
+
 
 # # 2.1全国疫情地图
 
-# In[3]:
-
-
-import json
 import datetime
 from pyecharts.charts import Map
 from pyecharts import options as opts
@@ -200,6 +120,7 @@ with open(datafile, 'r', encoding='UTF-8') as file:
 # 分析全国实时确诊数据：'confirmedCount'字段
 china_data = []
 for province in json_array:
+    print(type(province))
     china_data.append((province['provinceShortName'], province['confirmedCount']))
 china_data = sorted(china_data, key=lambda x: x[1], reverse=True)                 #reverse=True,表示降序，反之升序
 
@@ -232,18 +153,10 @@ m.set_global_opts(title_opts=opts.TitleOpts(title='全国实时确诊数据',
                                                     is_piecewise=True,   #是否为分段型
                                                     is_show=True))       #是否显示视觉映射配置
 #render（）会生成本地 HTML 文件，默认会在当前目录生成 render.html 文件，也可以传入路径参数，如 m.render("mycharts.html")
-m.render(path='/home/aistudio/data/全国实时确诊数据.html')
+m.render(path='./data/全国实时确诊数据.html')
 
 
 # # 2.2湖北省疫情地图
-
-# In[4]:
-
-
-import json
-import datetime
-from pyecharts.charts import Map
-from pyecharts import options as opts
 
 # 读原始数据文件
 today = datetime.date.today().strftime('%Y%m%d')   #20200315
@@ -253,9 +166,8 @@ with open(datafile, 'r', encoding='UTF-8') as file:
 
 # 分析湖北省实时确诊数据
 # 读入规范化的城市名称，用于规范化丁香园数据中的城市简称
-with open('/home/aistudio/data/data24815/pycharts_city.txt', 'r', encoding='UTF-8') as f:
+with open('./pycharts_city.txt', 'r', encoding='UTF-8') as f:
     defined_cities = [line.strip() for line in f.readlines()]
-
 
 def format_city_name(name, defined_cities):
     for defined_city in defined_cities:
@@ -299,12 +211,10 @@ m.set_global_opts(title_opts=opts.TitleOpts(title='湖北省实时确诊数据',
                   visualmap_opts=opts.VisualMapOpts(pieces=pieces,
                                                     is_piecewise=True,
                                                     is_show=True))
-m.render(path='/home/aistudio/data/湖北省实时确诊数据.html')
+m.render(path='./data/湖北省实时确诊数据.html')
 
 
 # # 三、疫情增长趋势图
-
-# In[5]:
 
 
 import numpy as np
@@ -365,15 +275,13 @@ line.set_global_opts(title_opts=opts.TitleOpts(title="新增确诊病例", subti
                      yaxis_opts=opts.AxisOpts(max_=16000, min_=1, type_="log",    #坐标轴配置项
                                               splitline_opts=opts.SplitLineOpts(is_show=True),#分割线配置项
                                               axisline_opts=opts.AxisLineOpts(is_show=True)))#坐标轴刻度线配置项
-line.render(path='/home/aistudio/data/新增确诊趋势图.html')
+line.render(path='./data/新增确诊趋势图.html')
 
-
-# # 请在以下cell中完成作业
+'''
+ 以下部分都是@chenxi 完成
+'''
 
 # # 作业：疫情分布饼状图
-
-# In[35]:
-
 
 # 引用之前读取的全国疫情数据
 print(china_data)
@@ -386,16 +294,8 @@ p.add("", [list(z) for z in zip(province, counts)], center=["50%", "35%"])
 p.set_global_opts(title_opts=opts.TitleOpts(title="全国实时疫情分布", subtitle="数据来源：丁香园"),
                     legend_opts=opts.LegendOpts(is_show=False))
 p.set_series_opts(label_opts=opts.LabelOpts(formatter="{b}: {c}"))
-p.render(path="/home/aistudio/data/全国实时疫情分布.html")
+p.render(path="./data/全国实时疫情分布.html")
 
-
-# # 请将作业截图进行上传
-
-# ![](https://ai-studio-static-online.cdn.bcebos.com/2b0176ee76114d1395bb34183134aa25f7687c168bd2442580d3f5e53d009b4d)
-# ![](https://ai-studio-static-online.cdn.bcebos.com/93dc9969e3544d10b764f5a0668e6143c46ac9c6216d4db7983732710a6f9fe7)
-# 
-
-# In[ ]:
 
 
 
