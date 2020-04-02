@@ -1,0 +1,13 @@
+<component name="InspectionProjectProfileManager">
+  <profile version="1.0">
+    <option name="myName" value="Project Default" />
+    <inspection_tool class="PyUnresolvedReferencesInspection" enabled="true" level="WARNING" enabled_by_default="true">
+      <option name="ignoredIdentifiers">
+        <list>
+          <option value="testNN_new.src.basemodel_1.utils_for_python3" />
+          <option value="testNN_new.src.basemodel_1.configuration" />
+        </list>
+      </option>
+    </inspection_tool>
+  </profile>
+</component>
